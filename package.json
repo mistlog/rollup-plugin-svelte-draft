@@ -1,0 +1,37 @@
+{
+    "name": "rollup-plugin-svelte-draft",
+    "version": "0.0.1",
+    "description": "Transcribe SvelteDraft components with Rollup",
+    "author": "mistlog",
+    "license": "MIT",
+    "keywords": [
+        "svelte",
+        "typescript",
+        "typedraft",
+        "transcriber",
+        "literate programming",
+        "rollup-plugin"
+    ],
+    "scripts": {
+        "build": "tsc"
+    },
+    "files": [
+        "dist"
+    ],
+    "main": "./dist/index.js",
+    "types": "./dist/index.d.ts",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/mistlog/rollup-plugin-svelte-draft"
+    },
+    "homepage": "https://github.com/mistlog/rollup-plugin-svelte-draft",
+    "dependencies": {
+        "rollup-pluginutils": "^2.8.2",
+        "svelte-draft": "0.1.1"
+    },
+    "devDependencies": {
+        "@types/node": "^12.12.14",
+        "ts-node": "^8.6.2",
+        "typescript": "^3.7.5"
+    }
+}
