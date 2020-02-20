@@ -1,6 +1,6 @@
 {
     "name": "rollup-plugin-svelte-draft",
-    "version": "0.0.1",
+    "version": "0.0.2",
     "description": "Transcribe SvelteDraft components with Rollup",
     "author": "mistlog",
     "license": "MIT",
@@ -27,7 +27,7 @@
     "homepage": "https://github.com/mistlog/rollup-plugin-svelte-draft",
     "dependencies": {
         "rollup-pluginutils": "^2.8.2",
-        "svelte-draft": "0.1.1"
+        "svelte-draft": "0.1.2"
     },
     "devDependencies": {
         "@types/node": "^12.12.14",
