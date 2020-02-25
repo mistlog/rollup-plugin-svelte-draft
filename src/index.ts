@@ -13,6 +13,7 @@ export interface IOptions
 export default function SvelteDraft(options: IOptions = {})
 {
     const filter = createFilter(options.include, options.exclude);
+    const ExistsAsync = promisify(exists);
 
     return {
         async resolveId(importee: string, importer: string)
@@ -20,10 +21,24 @@ export default function SvelteDraft(options: IOptions = {})
             // importer of entry main.js is undefined, skip it
             if (!importer) return null;
 
-            //
-            if (importee.endsWith(".svelte") || importee.endsWith(".js"))
+            // console.log(`importee: ${importee}, importer: ${importer}`);
+
+            const importee_absolute_path = resolvePath(importer, "..", importee);
+            
+            // importee is typedraft: *.js.tsx
+            if (importee.endsWith(".js") && await ExistsAsync(`${importee_absolute_path}.tsx`))
             {
-                return `${resolvePath(importer, "..", importee)}.tsx`;
+                return `${importee_absolute_path}.tsx`;
+            }
+            // importee is svelte-draft: *.tsx
+            else if (await ExistsAsync(`${importee_absolute_path}.tsx`))
+            {
+                return `${importee_absolute_path}.tsx`;
+            }
+            // importee is just typescript: *.ts
+            else if (await ExistsAsync(`${importee_absolute_path}.ts`))
+            {
+                return `${importee_absolute_path}.ts`;
             }
             return null;
         },
@@ -33,18 +48,23 @@ export default function SvelteDraft(options: IOptions = {})
             if (!filter(id)) return;
 
             let transformed = "";
-            if (id.endsWith(".svelte.tsx"))
+
+            // console.log(`id: ${id}`);
+            
+            // it's typedraft or typescript file
+            if (id.endsWith(".js.tsx") || id.endsWith(".ts"))
+            {
+                transformed = await TranscribeTypeDraftAsync(id);
+            }
+            // it's svelte-draft
+            else if (id.endsWith(".tsx"))
             {
                 transformed = await TranscribeSvelteDraftAsync(id);
-                const css_path = id.replace(".svelte.tsx", ".css");
-                if (await promisify(exists)(css_path))
+                const css_path = id.replace(".tsx", ".css");
+                if (await ExistsAsync(css_path))
                 {
                     this.addWatchFile(css_path);
                 }
-            }
-            else if (id.endsWith(".js.tsx"))
-            {
-                transformed = await TranscribeTypeDraftAsync(id);
             }
 
             return {
