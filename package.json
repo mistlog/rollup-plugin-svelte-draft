@@ -1,6 +1,6 @@
 {
     "name": "rollup-plugin-svelte-draft",
-    "version": "0.0.4",
+    "version": "0.0.5",
     "description": "Transcribe SvelteDraft components with Rollup",
     "author": "mistlog",
     "license": "MIT",
