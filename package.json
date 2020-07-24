@@ -27,7 +27,7 @@
     "homepage": "https://github.com/mistlog/rollup-plugin-svelte-draft",
     "dependencies": {
         "rollup-pluginutils": "^2.8.2",
-        "svelte-draft": "0.1.4"
+        "svelte-draft": "^0.2.0"
     },
     "devDependencies": {
         "@types/node": "^12.12.14",
